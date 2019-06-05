@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebLabsV05.Data;
+using WebLabsV05.DAL.Data;
+using WebLabsV05.DAL.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebLabsV05.Services;
 
 namespace WebLabsV05
 {
@@ -38,7 +40,13 @@ namespace WebLabsV05
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt=> 
+            {
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+            })                
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -46,7 +54,10 @@ namespace WebLabsV05
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
+                            ApplicationDbContext context,
+                            UserManager<ApplicationUser> userManager,
+                            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -65,6 +76,10 @@ namespace WebLabsV05
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            DbInitializer.Seed(context, userManager, roleManager)
+                .GetAwaiter()
+                .GetResult();
 
             app.UseMvc(routes =>
             {

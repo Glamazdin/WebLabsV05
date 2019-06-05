@@ -1,8 +1,71 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@*@using  WebLabsV05.Controllers*@
+@{
+    ViewData["Title"] = "Index";
+    var source = @ViewData["Lst"] as SelectList;
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <h2>@ViewData["Text"]</h2>
+
+    <h2>Список</h2>
+    <ol type="A">
+        @for (var i = 1; i <= 3; i++)
+        {
+            <li>элемент @i списка</li>
+        }
+    </ol>
+    <hr />
+    <h2>Форма</h2>
+    <form role="form">
+        <fieldset class="form-group">
+            <select asp-items="@ViewData["Lst"] as SelectList"></select>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="chk1" id="check1" />
+                        <label for="check1" class="form-check-label"> Чек-бокс 1</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="chk2" id="check2" />
+                        <label for="check2" class="form-check-label"> Чек-бокс 2</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" checked="checked" name="radio" value="1" id="radio1" />
+                    <label class="form-check-label" for="radio1">Радио-1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radio" value="2" id="radio1" />
+                    <label class="form-check-label" for="radio2">Радио-2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="radio" value="3" id="radio3" />
+                    <label class="form-check-label" for="radio3">Радио-3</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="login" class="col-sm-2 col-form-label">Логин:</label>
+            <div class="col-md-10">
+                <input type="text" id="login" name="pass" class="form-control" placeholder="Введите имя" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="pass" class="col-sm-2 col-form-label">Пароль:</label>
+            <div class="col-md-10">
+                <input type="password" id="pass" name="pass" class="form-control" placeholder="Введите пароль" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <button type="submit" class="btn btn-info">Отправить</button>
+            </div>
+        </div>
+    </form>
