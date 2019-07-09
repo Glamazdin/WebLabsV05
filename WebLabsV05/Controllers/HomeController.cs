@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebLabsV05.Models;
@@ -32,7 +35,11 @@ namespace WebLabsV05.Controllers
             ViewData["Lst"] = new SelectList(_listDemo,"ListItemValue","ListItemText");
             return View();
         }        
+        
     }
+
+
+
 
     public class ListDemo
     {
