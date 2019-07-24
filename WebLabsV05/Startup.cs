@@ -15,6 +15,10 @@ using WebLabsV05.DAL.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebLabsV05.Services;
+using WebLabsV05.Extensions;
+using WebLabsV05.Models;
+using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace WebLabsV05
 {
@@ -49,7 +53,14 @@ namespace WebLabsV05
             })                
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddDistributedMemoryCache();
+            services.AddSession(opt =>
+            {
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.IsEssential = true;
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<Cart>(sp=>CartService.GetCart(sp));            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -57,8 +68,11 @@ namespace WebLabsV05
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, 
                             ApplicationDbContext context,
                             UserManager<ApplicationUser> userManager,
-                            RoleManager<IdentityRole> roleManager)
+                            RoleManager<IdentityRole> roleManager,
+                            ILoggerFactory loggerFactory)
         {
+           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,12 +84,16 @@ namespace WebLabsV05
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseLogging();
+            
 
             app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();           
 
             app.UseAuthentication();
+            app.UseSession();
 
             DbInitializer.Seed(context, userManager, roleManager)
                 .GetAwaiter()

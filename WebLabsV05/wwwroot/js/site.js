@@ -1,6 +1,6 @@
 ﻿// После загрузки страницы
 $(document).ready(function () {
-    bsCustomFileInput.init();
+    //bsCustomFileInput.init();
     //найти все элементы класса page-link
     //и подписаться на событие click
     $(".page-link").click(function (e) {

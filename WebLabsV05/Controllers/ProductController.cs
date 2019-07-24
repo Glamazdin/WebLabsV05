@@ -5,6 +5,7 @@ using WebLabsV05.DAL.Entities;
 using WebLabsV05.Models;
 using WebLabsV05.Extensions;
 using WebLabsV05.DAL.Data;
+using Microsoft.Extensions.Logging;
 
 namespace WebLabsV05.Controllers
 {
@@ -13,19 +14,27 @@ namespace WebLabsV05.Controllers
         public List<Dish> _dishes { get; set; }
         List<DishGroup> _dishGroups;
         ApplicationDbContext _context;
+        private ILogger _logger;
 
         int _pageSize;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context, 
+                ILogger<ProductController> logger)
         {
             _pageSize = 3;
             _context = context;
+            _logger = logger;
             //SetupData();
         }
         [Route("Catalog")]
-        [Route("Catalog/Page_{pageNo}")]
-        public IActionResult Index(int? group, int pageNo=1)
+        [Route("Catalog/Page_{pageNo=1}")]
+        public IActionResult Index(int? group, int pageNo)
         {
+            var groupMame = group.HasValue
+                ? _context.DishGroups.Find(group.Value)?.GroupName
+                : "all groups";
+            _logger.LogInformation("info: group={groupMame},  page={pageNo}",groupMame,pageNo);
+
             var dishesFiltered = _context.Dishes
                 .Where(d => !group.HasValue || d.DishGroupId == group.Value);
 
