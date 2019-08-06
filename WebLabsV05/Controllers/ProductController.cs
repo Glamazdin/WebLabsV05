@@ -33,7 +33,7 @@ namespace WebLabsV05.Controllers
             var groupMame = group.HasValue
                 ? _context.DishGroups.Find(group.Value)?.GroupName
                 : "all groups";
-            _logger.LogInformation("info: group={groupMame},  page={pageNo}",groupMame,pageNo);
+           // _logger.LogInformation("info: group={groupMame},  page={pageNo}",groupMame,pageNo);
 
             var dishesFiltered = _context.Dishes
                 .Where(d => !group.HasValue || d.DishGroupId == group.Value);

@@ -9,8 +9,14 @@ namespace WebLabsV05.Services
 {
     public class FileLogger : ILogger
     {
+        // путь к файлу логирования
         private string _filePath;
+        // объект для синхронизации записи в файл
         private object _lock;
+        /// <summary>
+        /// Констркутор
+        /// </summary>
+        /// <param name="path">путь к файлу логирования</param>
         public FileLogger(string path)
         {
             _filePath = path;
@@ -23,6 +29,7 @@ namespace WebLabsV05.Services
 
         public bool IsEnabled(LogLevel logLevel)
         {
+            // логирование разрешено для уровня Infomation
             return logLevel==LogLevel.Information;
         }
 
@@ -45,7 +52,12 @@ namespace WebLabsV05.Services
 
     public class FileLoggerProvider : ILoggerProvider
     {
+        // путь к файлу логирования
         private string _filepath;
+        /// <summary>
+        /// Констркутор
+        /// </summary>
+        /// <param name="path">путь к файлу логирования</param>
         public FileLoggerProvider(string path)
         {
             _filepath = path;

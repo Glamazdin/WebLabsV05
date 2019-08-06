@@ -26,10 +26,10 @@
             <nav class="navbar navbar-expand-md navbar-dark bg-dark">
                 <!-- меню сайта -->
                 <a class="navbar-brand" href="#">WebLabsV05</a>
-                @await Component.InvokeAsync("Menu")                
+                @await Component.InvokeAsync("Menu")
                 <!-- меню сайта - конец -->
-                <!-- Информация пользователя -->    
-            
+                <!-- Информация пользователя -->
+
                 <partial name="_UserPartial" />
                 <!-- Информация пользователя - конец -->
             </nav> <!-- Панель навигации - конец -->
@@ -69,8 +69,7 @@
                 integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
         </script>
     </environment>
-    
-    @RenderSection("Scripts", required: false)
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

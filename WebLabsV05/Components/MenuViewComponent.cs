@@ -17,7 +17,8 @@ namespace WebLabsV05.Components
         {
             new MenuItem{ Controller="Home", Action="Index", Text="Lab 2"},
             new MenuItem{ Controller="Product", Action="Index", Text="Каталог"},
-            new MenuItem{ IsPage=true, Area="Admin", Page="/Index", Text="Администрирование"}
+            new MenuItem{ IsPage=true, Area="Admin", Page="/Index", Text="Администрирование"},
+            new MenuItem{ IsPage=true, Area="ApiDemo", Page="/Index", Text="API"}
         };
 
         public IViewComponentResult Invoke()
