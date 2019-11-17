@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label asp-for="Dish.Image" class="control-label"></label>
                 <div class="custom-file">
-                    <input type="image" class="custom-file-input" id="customFile">
+                    <input type="file" class="custom-file-input" asp-for="image" id="customFile">
                     <label class="custom-file-label" for="customFile">Выберите файл</label>
                 </div>
                 @*<input asp-for="Dish.Image" class="form-control" />

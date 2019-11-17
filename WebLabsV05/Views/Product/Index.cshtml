@@ -5,7 +5,7 @@
 }
 @{ 
     var categories = ViewData["Groups"] as IEnumerable<DishGroup>;
-    int currentGroup = (int)TempData["CurrentGroup"];
+    int currentGroup = (int)ViewData["CurrentGroup"];
    
     var text = currentGroup!=0
         ? categories
@@ -55,7 +55,7 @@
                page-total="@Model.TotalPages"
                action="Index"
                controller="Product"
-               group-id='@(int)TempData["CurrentGroup"]'></pager>
+               group-id="@currentGroup"></pager>
         <div>
 
         </div>

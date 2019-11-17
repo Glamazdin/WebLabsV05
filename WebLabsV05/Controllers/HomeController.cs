@@ -20,7 +20,7 @@ namespace WebLabsV05.Controllers
         public string Text { get; set; }
 
         public HomeController()
-        {
+        {            
             _listDemo = new List<ListDemo>
             {
                 new ListDemo{ ListItemValue=1, ListItemText="Item 1"},

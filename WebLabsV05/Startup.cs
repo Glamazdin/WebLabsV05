@@ -19,6 +19,7 @@ using WebLabsV05.Extensions;
 using WebLabsV05.Models;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace WebLabsV05
 {
@@ -60,7 +61,9 @@ namespace WebLabsV05
                 opt.Cookie.IsEssential = true;
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<Cart>(sp=>CartService.GetCart(sp));            
+            services.AddScoped<Cart>(sp=>CartService.GetCart(sp));
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IUrlHelper>(sp=>UrlHelper.GetUrlHelper(sp));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -86,7 +89,7 @@ namespace WebLabsV05
             }
             app.UseLogging();
             
-
+            
             app.UseHttpsRedirection();
             
             app.UseStaticFiles();

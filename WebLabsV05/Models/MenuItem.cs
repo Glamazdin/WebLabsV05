@@ -21,5 +21,7 @@ namespace WebLabsV05.Models
         public string Active { get; set; } = "";
         // текст надписи
         public string Text { get; set; } = "";
+        // адрес конечной точки
+        public string Link { get; set; } = "";
     }
 }

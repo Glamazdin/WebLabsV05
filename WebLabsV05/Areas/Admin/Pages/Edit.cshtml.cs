@@ -77,18 +77,18 @@ namespace WebLabsV05.Areas.Admin.Pages
                 if(image!=null)
                 {
                     // если было предыдущее изображение
-                    if(!String.IsNullOrEmpty(previousImage))
+                    if (!String.IsNullOrEmpty(previousImage))
                     {
                         // если файл существует
                         var fileInfo = _environment.WebRootFileProvider
                                             .GetFileInfo("/Images/" + previousImage);
-                        if(fileInfo.Exists)
+                        if (fileInfo.Exists)
                         {
                             var oldPath = Path.Combine(_environment.WebRootPath, "images", previousImage);
                             // удалить предыдущее изображение
                             System.IO.File.Delete(oldPath);
                         }
-                        
+
                     }
                     using (var stream = new FileStream(path, FileMode.Create))
                     {

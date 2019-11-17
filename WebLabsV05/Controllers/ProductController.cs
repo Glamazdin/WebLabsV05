@@ -42,10 +42,11 @@ namespace WebLabsV05.Controllers
             ViewData["Groups"] = _context.DishGroups;
 
             // Получить id текущей группы и поместить в TempData
-            var currentGroup = 0;
-            int.TryParse(HttpContext
-                        .Request.Query["group"], out currentGroup);
-            TempData["CurrentGroup"] = currentGroup;
+            var currentGroup = group.HasValue
+                ? group.Value
+                : 0;
+            
+            ViewData["CurrentGroup"] = currentGroup;
 
 
             //if (Request.Headers["x-requested-with"] == "XMLHttpRequest")

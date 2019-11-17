@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace WebLabsV05.TagHelpers
 {
@@ -10,12 +11,14 @@ namespace WebLabsV05.TagHelpers
     public class ImageTagHelper : TagHelper
     {
         IUrlHelperFactory urlHelperFactory;
+        LinkGenerator _linkGenerator;
         public string ImgAction { get; set; }
         public string ImgController { get; set; }
 
-        public ImageTagHelper(IUrlHelperFactory factory)
+        public ImageTagHelper(IUrlHelperFactory factory, LinkGenerator linkGenerator)
         {
             urlHelperFactory = factory;
+            _linkGenerator = linkGenerator;
         }
 
         [ViewContext]
@@ -25,7 +28,8 @@ namespace WebLabsV05.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             var urlHelper = urlHelperFactory.GetUrlHelper(viewContext);
-            var url = urlHelper.Action(ImgAction, ImgController);
+            //var url = urlHelper.Action(ImgAction, ImgController);
+            var url = _linkGenerator.GetPathByAction(ImgAction, ImgController);
             output.Attributes.Add("src", url);            
         }
     }

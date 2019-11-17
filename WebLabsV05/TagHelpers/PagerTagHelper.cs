@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -8,6 +9,7 @@ namespace WebLabsV05.TagHelpers
     public class PagerTagHelper : TagHelper
     {
         IUrlHelperFactory urlHelperFactory;
+        IUrlHelper urlHelper;
         // номер текущей страницы
         public int PageCurrent { get; set; }
         // общее количество страниц
@@ -20,9 +22,10 @@ namespace WebLabsV05.TagHelpers
         public string Controller { get; set; } 
         public int? GroupId { get; set; }
 
-        public PagerTagHelper(IUrlHelperFactory uhf)
+        public PagerTagHelper(IUrlHelperFactory uhf, IUrlHelper helper)
         {
             urlHelperFactory = uhf;
+            urlHelper = helper;
         }
          
         [ViewContext]
@@ -31,7 +34,7 @@ namespace WebLabsV05.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            var urlHelper = urlHelperFactory.GetUrlHelper(viewContext);
+            //var urlHelper = urlHelperFactory.GetUrlHelper(viewContext);
             
             // контейнер разметки пейджера
             //var result = new TagBuilder("nav");

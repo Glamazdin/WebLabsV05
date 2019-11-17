@@ -10,7 +10,7 @@ using WebLabsV05.Models;
 
 namespace WebLabsV05.Components
 {
-    public class MenuViewComponent:ViewComponent
+    public class MenuViewComponent : ViewComponent
     {
         // Инициализация списка элементов меню
         private List<MenuItem> _menuItems = new List<MenuItem>
@@ -18,15 +18,16 @@ namespace WebLabsV05.Components
             new MenuItem{ Controller="Home", Action="Index", Text="Lab 2"},
             new MenuItem{ Controller="Product", Action="Index", Text="Каталог"},
             new MenuItem{ IsPage=true, Area="Admin", Page="/Index", Text="Администрирование"},
-            new MenuItem{ IsPage=true, Area="ApiDemo", Page="/Index", Text="API"}
-        };
+            new MenuItem{ IsPage=true, Area="ApiDemo", Page="/Index", Text="API-demo"}
+        };       
+       
 
         public IViewComponentResult Invoke()
         {
+            
             //Получение значений сегментов маршрута
-            var controller = ViewContext.RouteData.Values["controller"];
-            var page = ViewContext.RouteData.Values["page"];
-            var area = ViewContext.RouteData.Values["area"];
+            var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+            var area = ViewContext.RouteData.Values["area"]?.ToString();           
 
             foreach(var item in _menuItems)
             {
@@ -41,6 +42,7 @@ namespace WebLabsV05.Components
                 }
             }
             return  View(_menuItems);
+            
         }
     }
 }

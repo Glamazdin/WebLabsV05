@@ -58,19 +58,13 @@ namespace WebLabV5.Tests
         {
             // Arrange 
             // объекта класса ControllerContext
-            var controllerContex = new ControllerContext();  
-            // словарь для формирования значений Query
-            var queryDictionary = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>();
-            queryDictionary.Add("group", "0");
-            // макет для TempData
-            var tempData = new Mock<ITempDataDictionary>();
+            var controllerContex = new ControllerContext(); 
             // объект для HttpContext
             var httpContext = new DefaultHttpContext();
+            httpContext.Request.Headers.Add("x-requested-with", "");
             // поместить HttpContext в ControllerContext
             controllerContex.HttpContext = httpContext;
-            // сформировать строку запроса
-            controllerContex.HttpContext.Request.Query = new QueryCollection(queryDictionary);
-
+            
             // настройка для сонтекста базы данных
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "TestDb")
@@ -91,9 +85,7 @@ namespace WebLabV5.Tests
                 context.DishGroups.Add(new DishGroup { GroupName = "fake group" });
                 context.SaveChanges();           
                 // создать объект контроллера
-                var controller = new ProductController(context) { ControllerContext=controllerContex };  
-                // сформировать объект TempData
-                controller.TempData = tempData.Object;
+                var controller = new ProductController(context,null) { ControllerContext=controllerContex };
 
                 // Act
                 var result = controller.Index(pageNo: page, group: null) as ViewResult;
